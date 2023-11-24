@@ -46,17 +46,17 @@ export default {
           "letter-spacing": "0.009em",
         },
         ".body": {
-          "font-s": "1rem",
+          "font-size": "1rem",
           "font-weight": "400",
           "letter-spacing": "0.009em",
         },
         ".body-2": {
-          "font-s": "1rem",
+          "font-size": "1rem",
           "font-weight": "500",
           "letter-spacing": "0.009em",
         },
         ".body-3": {
-          "font-s": "1rem",
+          "font-size": "1rem",
           "font-weight": "700",
           "letter-spacing": "0.016em",
         },

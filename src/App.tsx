@@ -1,14 +1,9 @@
-import { useSearch } from "./hooks";
+import { SearchField } from "./components/Search";
 
 export default function App() {
-  const { locations, isError, isLoading } = useSearch("malm");
-  console.log(locations);
-  if (isLoading) {
-    return "Loading...";
-  }
-  if (isError) {
-    return "Error!!!";
-  }
-
-  return locations.map((location) => location.name + " ");
+  return (
+    <div className="mt-20 p-10">
+      <SearchField aria-label="test" placeholder="Search for cities" />
+    </div>
+  );
 }
