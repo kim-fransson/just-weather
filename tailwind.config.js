@@ -7,6 +7,9 @@ export default {
         blue: "#20233E",
         gray: {
           100: "#F5F5F5",
+          300: "#F1EFEF",
+          400: "#EAEAEA",
+          500: "#D8D8D8",
           900: "#212121",
         },
         indigo: {
