@@ -7,6 +7,9 @@ export default {
         blue: "#20233E",
         gray: {
           100: "#F5F5F5",
+          300: "#F1EFEF",
+          400: "#EAEAEA",
+          500: "#D8D8D8",
           900: "#212121",
         },
         indigo: {
@@ -46,17 +49,17 @@ export default {
           "letter-spacing": "0.009em",
         },
         ".body": {
-          "font-s": "1rem",
+          "font-size": "1rem",
           "font-weight": "400",
           "letter-spacing": "0.009em",
         },
         ".body-2": {
-          "font-s": "1rem",
+          "font-size": "1rem",
           "font-weight": "500",
           "letter-spacing": "0.009em",
         },
         ".body-3": {
-          "font-s": "1rem",
+          "font-size": "1rem",
           "font-weight": "700",
           "letter-spacing": "0.016em",
         },

@@ -1,14 +1,34 @@
-export default function App() {
-  return (
-    <div>
-      <p className="headline-xl">Lorem Ipsum</p>
-      <p className="headline-lg">Lorem Ipsum</p>
-      <p className="headline-md">Lorem Ipsum</p>
-      <p className="headline-sm">Lorem Ipsum</p>
+import { useState } from "react";
+import Logo from "./assets/icons/logo.svg?react";
+import { Autocomplete } from "./components/Autocomplete/Autocomplete";
+import { joinObject } from "./utils";
+import { Item } from "react-stately";
+import { useSearch } from "./hooks";
+import { useDebounce } from "@uidotdev/usehooks";
 
-      <p className="body">Lorem Ipsum</p>
-      <p className="body-2">Lorem Ipsum</p>
-      <p className="body-3">Lorem Ipsum</p>
-    </div>
+export default function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const { isLoading, locations } = useSearch(debouncedSearchTerm);
+  return (
+    <main className="mx-auto h-screen border px-10 pb-12 pt-8 lg:px-60">
+      <header className="flex items-center gap-10">
+        <Logo className="shrink-0" />
+        <Autocomplete
+          items={locations}
+          inputValue={searchTerm}
+          onInputChange={setSearchTerm}
+          isLoading={isLoading}
+          aria-label="Search location for weather forecast"
+          placeholder="Search for cities"
+        >
+          {(item) => (
+            <Item key={item.name + "-" + item.region + "-" + item.country}>
+              {joinObject(item)}
+            </Item>
+          )}
+        </Autocomplete>
+      </header>
+    </main>
   );
 }
