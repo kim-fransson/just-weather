@@ -2,6 +2,9 @@ export type LocationData = {
   country: string;
   name: string;
   region: string;
+  lat: number;
+  lon: number;
+  id: number;
 };
 
 export const search = async (query: string): Promise<LocationData[]> => {
