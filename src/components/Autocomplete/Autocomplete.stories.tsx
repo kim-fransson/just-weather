@@ -26,7 +26,11 @@ const meta: Meta<typeof Autocomplete> = {
     "aria-label": "Search location for weather forecast",
     placeholder: "Search for cities",
   },
-  argTypes: {},
+  argTypes: {
+    onSelectionChange: {
+      action: "selection changed",
+    },
+  },
   render: (args) => <AutocompleteWithState {...args} />,
 };
 export default meta;
