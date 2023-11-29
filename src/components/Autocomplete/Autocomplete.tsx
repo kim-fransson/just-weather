@@ -33,7 +33,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
     state,
   );
 
-  const { isLoading, inputValue } = props;
+  const { isLoading } = props;
 
   return (
     <div
@@ -57,7 +57,9 @@ export const Autocomplete = (props: AutocompleteProps) => {
           isNonModal
           placement="bottom start"
         >
-          {!isLoading && inputValue !== "" && state.collection.size === 0 ? (
+          {!isLoading &&
+          state.inputValue !== "" &&
+          state.collection.size === 0 ? (
             <p className="rounded-md bg-indigo-50 px-4 py-2 text-gray-900 body">
               No results found
             </p>
