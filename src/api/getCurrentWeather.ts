@@ -1,4 +1,4 @@
-export type Condition = {
+export type WeatherCondition = {
   text: string;
   icon: string;
   code: number;
@@ -7,13 +7,10 @@ export type Condition = {
 export type CurrentWeather = {
   tempC: number;
   feelslikeC: number;
-  condition: Condition;
-  location: {
-    name: string;
-  };
+  condition: WeatherCondition;
 };
 
-export const currentWeather = async (
+export const getCurrentWeather = async (
   query: string,
 ): Promise<CurrentWeather> => {
   const currentWeatherUrl = import.meta.env

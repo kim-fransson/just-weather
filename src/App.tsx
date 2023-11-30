@@ -3,29 +3,45 @@ import Logo from "./assets/icons/logo.svg?react";
 import { Autocomplete } from "./components/Autocomplete/Autocomplete";
 import { joinObject } from "./utils";
 import { Item } from "react-stately";
-import { useSearch } from "./hooks";
-import { useDebounce, useGeolocation } from "@uidotdev/usehooks";
+import { useDebounce } from "@uidotdev/usehooks";
 import { LocationAndTemperature } from "./components/LocationAndTemperature/LocationAndTemperature";
-import { LocationData } from "./api";
+import { API_CACHE_KEYS, LocationData, search } from "./api";
+import { HourlyForecast } from "./components/HourlyForecast/HourlyForecast";
+import useSWR from "swr";
 
+/*
+todo: fix geolocation auto-selection
+todo: don't include mockServiceWorker in build
+todo: re-think the caching logic
+*/
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentLocation, setCurrentLocation] = useState<LocationData>();
 
-  const geoLocationState = useGeolocation();
+  // const geoLocationState = useGeolocation();
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const { isLoading, locations } = useSearch(debouncedSearchQuery);
+  const {
+    isLoading,
+    data: locations,
+    mutate,
+  } = useSWR(API_CACHE_KEYS.SEARCH, () => search(debouncedSearchQuery), {
+    fallbackData: [],
+  });
 
   useEffect(() => {
-    if (!geoLocationState.loading) {
-      if (!geoLocationState.error) {
-        setSearchQuery(
-          `${geoLocationState.latitude},${geoLocationState.longitude}`,
-        );
-      }
-    }
-  }, [geoLocationState]);
+    mutate();
+  }, [debouncedSearchQuery, mutate]);
+
+  // useEffect(() => {
+  //   if (!geoLocationState.loading) {
+  //     if (!geoLocationState.error) {
+  //       setSearchQuery(
+  //         `${geoLocationState.latitude},${geoLocationState.longitude}`,
+  //       );
+  //     }
+  //   }
+  // }, [geoLocationState]);
 
   return (
     <main className="mx-auto h-screen border px-10 pb-12 pt-8 lg:px-60">
@@ -39,7 +55,7 @@ export default function App() {
           placeholder="Search for cities"
           onSelectionChange={(key) => {
             const selectedKey = Number.parseInt(key as string);
-            const selectedLocation = locations.find(
+            const selectedLocation = locations?.find(
               (location) => selectedKey === location.id,
             );
             if (selectedLocation) {
@@ -55,6 +71,7 @@ export default function App() {
         </Autocomplete>
       </header>
       {currentLocation && <LocationAndTemperature location={currentLocation} />}
+      {currentLocation && <HourlyForecast location={currentLocation} />}
     </main>
   );
 }

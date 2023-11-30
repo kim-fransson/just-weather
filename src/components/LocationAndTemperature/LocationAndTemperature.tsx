@@ -1,5 +1,10 @@
-import { CurrentWeather, LocationData } from "../../api";
-import { useCurrentWeather } from "../../hooks";
+import useSWR from "swr";
+import {
+  API_CACHE_KEYS,
+  CurrentWeather,
+  LocationData,
+  getCurrentWeather,
+} from "../../api";
 
 export interface LocationAndTemperatureProps {
   location: LocationData;
@@ -7,9 +12,10 @@ export interface LocationAndTemperatureProps {
 
 export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   const { location } = props;
-  const { currentWeather, isLoading } = useCurrentWeather(
-    location.lat,
-    location.lon,
+
+  const { isLoading, data: currentWeather } = useSWR(
+    API_CACHE_KEYS.CURRENT_WEATHER + `-${location.id}`,
+    () => getCurrentWeather(`${location.lat},${location.lon}`),
   );
 
   if (isLoading) {
