@@ -1,34 +1,13 @@
 import { LocationAndTemperature } from "./LocationAndTemperature";
 import type { Meta, StoryObj } from "@storybook/react";
-import { rest } from "msw";
 
-import exampleIcon from "../../assets/weather-api/cloud_64x64.webp";
+import { currentWeatherHandler } from "../../mocks/handlers";
 
 const meta: Meta<typeof LocationAndTemperature> = {
   component: LocationAndTemperature,
   parameters: {
     msw: {
-      handlers: [
-        rest.get(
-          import.meta.env.VITE_WEATHER_API_CURRENT_WEATHER_URL,
-          (_req, res, ctx) => {
-            return res(
-              ctx.json({
-                tempC: -3.0,
-                feelslikeC: -9.4,
-                condition: {
-                  text: "Overcast",
-                  icon: exampleIcon,
-                  code: 1009,
-                },
-                location: {
-                  name: "Helsingborg",
-                },
-              }),
-            );
-          },
-        ),
-      ],
+      handlers: [currentWeatherHandler],
     },
   },
 };

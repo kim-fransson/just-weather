@@ -1,6 +1,6 @@
 import { List } from "./List";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as CardStories from "../Card/Card.stories";
+import * as CardStories from "../Card";
 import { HourlyForecast } from "../../../api";
 
 const meta: Meta<typeof List> = {

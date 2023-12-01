@@ -8,11 +8,12 @@ import { LocationAndTemperature } from "./components/LocationAndTemperature/Loca
 import { API_CACHE_KEYS, LocationData, search } from "./api";
 import { HourlyForecast } from "./components/HourlyForecast/HourlyForecast";
 import useSWR from "swr";
+import { WeatherDetails } from "./components/WeatherDetails/WeatherDetails";
 
 /*
 todo: fix geolocation auto-selection
 todo: don't include mockServiceWorker in build
-todo: re-think the caching logic
+todo: loading for dropdown not working properly
 */
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,6 +73,7 @@ export default function App() {
       </header>
       {currentLocation && <LocationAndTemperature location={currentLocation} />}
       {currentLocation && <HourlyForecast location={currentLocation} />}
+      {currentLocation && <WeatherDetails location={currentLocation} />}
     </main>
   );
 }

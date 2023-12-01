@@ -6,7 +6,14 @@ export type HourlyForecast = {
   timeEpoch: number;
 };
 
+export type Astro = {
+  sunrise: string;
+  sunset: string;
+};
+
 export type DailyForecast = {
+  chanceOfRain: number;
+  astro: Astro;
   hours: HourlyForecast[];
 };
 
@@ -15,11 +22,12 @@ export type WeatherForecast = {
 };
 
 export const getWeatherForecast = async (
-  query: string,
+  lat: number,
+  lon: number,
   days: number = 1,
 ): Promise<WeatherForecast> => {
   const forecastUrl = import.meta.env.VITE_WEATHER_API_FORECAST_URL;
-  return fetch(`${forecastUrl}?q=${query}&days=${days}`).then((res) =>
+  return fetch(`${forecastUrl}?q=${lat},${lon}&days=${days}`).then((res) =>
     res.json(),
   );
 };

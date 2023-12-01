@@ -1,8 +1,8 @@
 import useSWR from "swr";
 import {
-  API_CACHE_KEYS,
   CurrentWeather,
   LocationData,
+  generateCacheKey,
   getCurrentWeather,
 } from "../../api";
 
@@ -14,15 +14,15 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   const { location } = props;
 
   const { isLoading, data: currentWeather } = useSWR(
-    API_CACHE_KEYS.CURRENT_WEATHER + `-${location.id}`,
-    () => getCurrentWeather(`${location.lat},${location.lon}`),
+    generateCacheKey("CURRENT_WEATHER", location.id),
+    () => getCurrentWeather(location.lat, location.lon),
   );
 
   if (isLoading) {
     return <span>Loading...</span>;
   }
 
-  const { tempC, feelslikeC, condition } = currentWeather as CurrentWeather;
+  const { tempC, condition } = currentWeather as CurrentWeather;
 
   return (
     <div className="inline-flex flex-col">
@@ -37,11 +37,8 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
       </div>
 
       <div className="-mt-4 flex items-center justify-between gap-4">
-        <span className="text-gray-900/87 headline-xl after:content-['\2103']">
+        <span className="text-gray-900/87 headline-xl after:content-['°C']">
           {tempC}
-        </span>
-        <span className="justify-self-start text-gray-900/87 headline-sm after:font-normal after:content-['\2103']">
-          feels like {feelslikeC}
         </span>
       </div>
     </div>

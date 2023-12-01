@@ -1,19 +1,18 @@
-import { HourlyForecast } from "./HourlyForecast";
+import { currentWeatherHandler, forecastHandler } from "../../mocks/handlers";
+import { WeatherDetails } from "./WeatherDetails";
 import type { Meta, StoryObj } from "@storybook/react";
-import { forecastHandler } from "../../mocks/handlers";
 
-const meta: Meta<typeof HourlyForecast> = {
-  component: HourlyForecast,
+const meta: Meta<typeof WeatherDetails> = {
+  component: WeatherDetails,
   parameters: {
     msw: {
-      handlers: [forecastHandler],
+      handlers: [forecastHandler, currentWeatherHandler],
     },
   },
-  args: {},
 };
 export default meta;
 
-type Story = StoryObj<typeof HourlyForecast>;
+type Story = StoryObj<typeof WeatherDetails>;
 
 export const Playground: Story = {
   args: {

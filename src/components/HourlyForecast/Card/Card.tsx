@@ -16,9 +16,7 @@ export const Card = ({ forecast }: CardProps) => {
     <div className="flex shrink-0 flex-col items-center rounded-2xl bg-white/32 px-4 py-2">
       <span className="uppercase text-gray-900/60 body-2">{formattedTime}</span>
       <img width="36" height="36" src={icon} alt="" />
-      <span className="text-gray-900 body-3 after:content-['\2103']">
-        {tempC}
-      </span>
+      <span className="text-gray-900 body-3 after:content-['°C']">{tempC}</span>
     </div>
   );
 };

@@ -8,12 +8,19 @@ export type CurrentWeather = {
   tempC: number;
   feelslikeC: number;
   condition: WeatherCondition;
+  pressureMb: number;
+  windKph: number;
+  uv: number;
+  visibilityKm: number;
 };
 
 export const getCurrentWeather = async (
-  query: string,
+  lat: number,
+  lon: number,
 ): Promise<CurrentWeather> => {
   const currentWeatherUrl = import.meta.env
     .VITE_WEATHER_API_CURRENT_WEATHER_URL;
-  return fetch(`${currentWeatherUrl}?q=${query}`).then((res) => res.json());
+  return fetch(`${currentWeatherUrl}?q=${lat},${lon}`).then((res) =>
+    res.json(),
+  );
 };
