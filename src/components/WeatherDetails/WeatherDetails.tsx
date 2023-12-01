@@ -18,6 +18,7 @@ import WindIcon from "../../assets/icons/wind-icon.svg?react";
 import UVIcon from "../../assets/icons/sun-icon.svg?react";
 import FeelsLikeIcon from "../../assets/icons/temperature-icon.svg?react";
 import VisibilityIcon from "../../assets/icons/visibility-icon.svg?react";
+import { DateTime } from "luxon";
 
 export interface WeatherDetailsProps {
   location: LocationData;
@@ -49,12 +50,14 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
       <Grid>
         <Card
           title="Sunrise"
-          value={astro.sunrise.toLowerCase()}
+          value={DateTime.fromFormat(astro.sunrise, "hh:mm a").toFormat(
+            "HH:mm",
+          )}
           icon={<SunriseIcon />}
         />
         <Card
           title="Sunset"
-          value={astro.sunset.toLowerCase()}
+          value={DateTime.fromFormat(astro.sunset, "hh:mm a").toFormat("HH:mm")}
           icon={<SunsetIcon />}
         />
         <Card

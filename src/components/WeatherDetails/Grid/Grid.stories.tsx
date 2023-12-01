@@ -1,7 +1,7 @@
 import { Grid } from "./Grid";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as CardStories from "../Card";
-import { Card } from "../Card";
+import * as CardStories from "../Card/Card.stories";
+import { Card, CardProps } from "../Card";
 
 const meta: Meta<typeof Grid> = {
   component: Grid,
@@ -13,7 +13,7 @@ type Story = StoryObj<typeof Grid>;
 export const Playground: Story = {
   args: {
     children: Array.from({ length: 8 }, (_, i) => ({
-      ...(CardStories.Playground.args as CardStories.CardProps),
+      ...(CardStories.Playground.args as CardProps),
       key: i,
     })).map((card) => (
       <Card
