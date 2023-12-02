@@ -1,16 +1,16 @@
 import { AriaComboBoxProps, useComboBox, useFilter } from "react-aria";
-import { LocationData } from "../../api";
 import { useComboBoxState } from "react-stately";
 import { useRef } from "react";
 import { Popover } from "../Popover";
 import { ListBox } from "../ListBox/ListBox";
 import { useMeasure } from "@uidotdev/usehooks";
 
-export interface AutocompleteProps extends AriaComboBoxProps<LocationData> {
+export interface AutocompleteProps<T extends object>
+  extends AriaComboBoxProps<T> {
   isLoading?: boolean;
 }
 
-export const Autocomplete = (props: AutocompleteProps) => {
+export const Autocomplete = <T extends object>(props: AutocompleteProps<T>) => {
   const { contains } = useFilter({ sensitivity: "base" });
   const state = useComboBoxState({
     ...props,
