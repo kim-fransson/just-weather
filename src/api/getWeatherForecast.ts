@@ -2,6 +2,7 @@ import { WeatherCondition } from "./getCurrentWeather";
 
 export type HourlyForecast = {
   tempC: number;
+  tempF: number;
   condition: WeatherCondition;
   timeEpoch: number;
 };

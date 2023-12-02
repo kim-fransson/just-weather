@@ -6,7 +6,9 @@ export type WeatherCondition = {
 
 export type CurrentWeather = {
   tempC: number;
+  tempF: number;
   feelslikeC: number;
+  feelslikeF: number;
   condition: WeatherCondition;
   pressureMb: number;
   windKph: number;

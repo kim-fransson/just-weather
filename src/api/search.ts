@@ -8,8 +8,8 @@ export type LocationData = {
 };
 
 export const searchByQuery = async (query: string): Promise<LocationData[]> => {
-  const searchUrl = import.meta.env.VITE_WEATHER_API_SEARCH_URL;
-  return fetch(`${searchUrl}?q=${query}`).then((res) => res.json());
+  const baseUrl = import.meta.env.VITE_WEATHER_API_BASE_URL;
+  return fetch(`${baseUrl}/search?q=${query}`).then((res) => res.json());
 };
 
 export const search = async (

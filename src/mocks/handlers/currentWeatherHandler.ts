@@ -8,7 +8,9 @@ export const currentWeatherHandler = rest.get(
     return res(
       ctx.json({
         tempC: -3.0,
+        tempF: 26.6,
         feelslikeC: -9.4,
+        feelslikeF: 15.1,
         condition: {
           text: "Overcast",
           icon: exampleIcon,

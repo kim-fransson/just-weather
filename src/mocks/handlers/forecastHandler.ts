@@ -7,6 +7,7 @@ export const forecastHandler = rest.get(
   (_req, res, ctx) => {
     const forecast = Array.from({ length: 24 }, (_, i) => ({
       tempC: -2.4,
+      tempF: 27.7,
       condition: {
         text: "Light snow showers",
         icon: exampleIcon,

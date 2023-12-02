@@ -12,9 +12,12 @@ export interface HourlyForecastProps {
 }
 
 export const HourlyForecast = ({ location }: HourlyForecastProps) => {
-  const { isLoading, data: forecast } = useSWR(
-    generateCacheKey("FORECAST", location.id),
-    () => getWeatherForecast(location.lat, location.lon, 1),
+  const {
+    isLoading,
+    data: forecast,
+    error: isError,
+  } = useSWR(generateCacheKey("FORECAST", location.id), () =>
+    getWeatherForecast(location.lat, location.lon, 1),
   );
 
   if (isLoading) {
@@ -22,6 +25,10 @@ export const HourlyForecast = ({ location }: HourlyForecastProps) => {
   }
 
   const { days } = forecast as WeatherForecast;
+
+  if (isError || !days) {
+    return <span>Error :/</span>;
+  }
 
   return (
     <div className="flex flex-col gap-5 overflow-hidden rounded-2xl bg-indigo-50 p-5 hover:overflow-x-auto">

@@ -5,6 +5,8 @@ import {
   generateCacheKey,
   getCurrentWeather,
 } from "../../api";
+import { useContext } from "react";
+import { TemperaturePreferenceContext } from "../../context";
 
 export interface LocationAndTemperatureProps {
   location: LocationData;
@@ -12,17 +14,25 @@ export interface LocationAndTemperatureProps {
 
 export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   const { location } = props;
+  const preferCelsius = useContext(TemperaturePreferenceContext);
 
-  const { isLoading, data: currentWeather } = useSWR(
-    generateCacheKey("CURRENT_WEATHER", location.id),
-    () => getCurrentWeather(location.lat, location.lon),
+  const {
+    isLoading,
+    data: currentWeather,
+    error: isError,
+  } = useSWR(generateCacheKey("CURRENT_WEATHER", location.id), () =>
+    getCurrentWeather(location.lat, location.lon),
   );
 
   if (isLoading) {
     return <span>Loading...</span>;
   }
 
-  const { tempC, condition } = currentWeather as CurrentWeather;
+  if (isError) {
+    return <span>Error :/</span>;
+  }
+
+  const { tempC, condition, tempF } = currentWeather as CurrentWeather;
 
   return (
     <div className="inline-flex flex-col">
@@ -37,8 +47,8 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
       </div>
 
       <div className="-mt-4 flex items-center justify-between gap-4">
-        <span className="text-gray-900/87 headline-xl after:content-['°C']">
-          {tempC}
+        <span className="text-gray-900/87 headline-xl">
+          {preferCelsius ? `${tempC} °C` : `${tempF} °F`}
         </span>
       </div>
     </div>

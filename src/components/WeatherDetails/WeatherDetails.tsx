@@ -19,20 +19,30 @@ import UVIcon from "../../assets/icons/sun-icon.svg?react";
 import FeelsLikeIcon from "../../assets/icons/temperature-icon.svg?react";
 import VisibilityIcon from "../../assets/icons/visibility-icon.svg?react";
 import { DateTime } from "luxon";
+import { useContext } from "react";
+import { TemperaturePreferenceContext } from "../../context";
 
 export interface WeatherDetailsProps {
   location: LocationData;
 }
 
 export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
-  const { isLoading: isLoadingForecast, data: forecast } = useSWR(
-    generateCacheKey("FORECAST", location.id),
-    () => getWeatherForecast(location.lat, location.lon, 1),
+  const preferCelsius = useContext(TemperaturePreferenceContext);
+
+  const {
+    isLoading: isLoadingForecast,
+    data: forecast,
+    error: isForecastError,
+  } = useSWR(generateCacheKey("FORECAST", location.id), () =>
+    getWeatherForecast(location.lat, location.lon, 1),
   );
 
-  const { isLoading: isLoadingCurrentWeather, data: currentWeather } = useSWR(
-    generateCacheKey("CURRENT_WEATHER", location.id),
-    () => getCurrentWeather(location.lat, location.lon),
+  const {
+    isLoading: isLoadingCurrentWeather,
+    data: currentWeather,
+    error: isCurrentWeatherError,
+  } = useSWR(generateCacheKey("CURRENT_WEATHER", location.id), () =>
+    getCurrentWeather(location.lat, location.lon),
   );
 
   if (isLoadingForecast || isLoadingCurrentWeather) {
@@ -40,8 +50,13 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
   }
 
   const { days } = forecast as WeatherForecast;
+
+  if (isForecastError || isCurrentWeatherError || !days) {
+    return <span>Error :/</span>;
+  }
+
   const { astro, chanceOfRain } = days[0];
-  const { pressureMb, windKph, uv, feelslikeC, visibilityKm } =
+  const { pressureMb, windKph, uv, feelslikeC, visibilityKm, feelslikeF } =
     currentWeather as CurrentWeather;
 
   return (
@@ -74,7 +89,7 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
         <Card title="UV index" value={`${uv} of 10`} icon={<UVIcon />} />
         <Card
           title="Feels like"
-          value={`${feelslikeC}°C`}
+          value={preferCelsius ? `${feelslikeC}°C` : `${feelslikeF}°F`}
           icon={<FeelsLikeIcon />}
         />
         <Card
