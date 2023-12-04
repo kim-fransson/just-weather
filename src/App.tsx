@@ -14,11 +14,12 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PageError } from "./components/PageError";
 
 /*
-todo: don't include mockServiceWorker in build
 todo: timezones improvements
 todo: fix so that popover closes after selection
 todo: icon title
 todo: check responsiveness
+todo: only one env variable?
+todo: rate limit on AWS
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] =

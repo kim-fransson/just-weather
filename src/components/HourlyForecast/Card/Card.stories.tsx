@@ -14,6 +14,7 @@ export const Playground: Story = {
   args: {
     forecast: {
       tempC: -2.4,
+      tempF: 27.7,
       condition: {
         text: "Light snow showers",
         icon: exampleIcon,
