@@ -16,7 +16,6 @@ import { PageError } from "./components/PageError";
 /*
 todo: timezones improvements
 todo: fix so that popover closes after selection
-todo: icon title
 todo: check responsiveness
 todo: only one env variable?
 todo: rate limit on AWS

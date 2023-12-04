@@ -1,7 +1,7 @@
 import { rest } from "msw";
 
 export const searchHandler = rest.get(
-  import.meta.env.VITE_WEATHER_API_SEARCH_URL,
+  import.meta.env.VITE_WEATHER_API_BASE_URL + "/search",
   (_req, res, ctx) => {
     return res(
       ctx.json([

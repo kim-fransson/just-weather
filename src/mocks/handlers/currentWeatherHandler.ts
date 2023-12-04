@@ -3,7 +3,7 @@ import { rest } from "msw";
 import exampleIcon from "../../assets/weather-api/cloud_64x64.webp";
 
 export const currentWeatherHandler = rest.get(
-  import.meta.env.VITE_WEATHER_API_CURRENT_WEATHER_URL,
+  import.meta.env.VITE_WEATHER_API_BASE_URL + "/weather/current",
   async (_req, res, ctx) => {
     return res(
       ctx.json({

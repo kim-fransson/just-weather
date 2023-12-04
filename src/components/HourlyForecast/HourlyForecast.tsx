@@ -1,10 +1,5 @@
 import useSWR from "swr";
-import {
-  LocationData,
-  WeatherForecast,
-  generateCacheKey,
-  getWeatherForecast,
-} from "../../api";
+import { LocationData, WeatherForecast, getWeatherForecast } from "../../api";
 import { List } from "./List";
 
 export interface HourlyForecastProps {
@@ -13,8 +8,8 @@ export interface HourlyForecastProps {
 
 export const HourlyForecast = ({ location }: HourlyForecastProps) => {
   const { isLoading, data: forecast } = useSWR(
-    generateCacheKey("FORECAST", location.id),
-    () => getWeatherForecast(location.lat, location.lon, 1),
+    ["/weather/forecast", location.lat, location.lon],
+    ([url, lat, lon]) => getWeatherForecast(url, lat, lon),
   );
 
   if (isLoading) {

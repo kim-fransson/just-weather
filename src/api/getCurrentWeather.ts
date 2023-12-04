@@ -17,12 +17,12 @@ export type CurrentWeather = {
 };
 
 export const getCurrentWeather = async (
+  url: string,
   lat: number,
   lon: number,
 ): Promise<CurrentWeather> => {
-  const currentWeatherUrl = import.meta.env
-    .VITE_WEATHER_API_CURRENT_WEATHER_URL;
-  return fetch(`${currentWeatherUrl}?q=${lat},${lon}`).then((res) =>
+  const currentWeatherUrl = import.meta.env.VITE_WEATHER_API_BASE_URL;
+  return fetch(`${currentWeatherUrl}${url}?q=${lat},${lon}`).then((res) =>
     res.json(),
   );
 };

@@ -3,7 +3,7 @@ import { rest } from "msw";
 import exampleIcon from "../../assets/weather-api/cloud_64x64.webp";
 
 export const forecastHandler = rest.get(
-  import.meta.env.VITE_WEATHER_API_FORECAST_URL,
+  import.meta.env.VITE_WEATHER_API_BASE_URL + "/weather/forecast",
   (_req, res, ctx) => {
     const forecast = Array.from({ length: 24 }, (_, i) => ({
       tempC: -2.4,

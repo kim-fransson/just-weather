@@ -3,7 +3,6 @@ import {
   CurrentWeather,
   LocationData,
   WeatherForecast,
-  generateCacheKey,
   getCurrentWeather,
   getWeatherForecast,
 } from "../../api";
@@ -30,13 +29,13 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
   const preferCelsius = useContext(TemperaturePreferenceContext);
 
   const { isLoading: isLoadingForecast, data: forecast } = useSWR(
-    generateCacheKey("FORECAST", location.id),
-    () => getWeatherForecast(location.lat, location.lon, 1),
+    ["/weather/forecast", location.lat, location.lon],
+    ([url, lat, lon]) => getWeatherForecast(url, lat, lon),
   );
 
   const { isLoading: isLoadingCurrentWeather, data: currentWeather } = useSWR(
-    generateCacheKey("CURRENT_WEATHER", location.id),
-    () => getCurrentWeather(location.lat, location.lon),
+    ["/weather/current", location.lat, location.lon],
+    ([url, lat, lon]) => getCurrentWeather(url, lat, lon),
   );
 
   if (isLoadingForecast || isLoadingCurrentWeather) {

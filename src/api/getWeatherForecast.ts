@@ -23,12 +23,12 @@ export type WeatherForecast = {
 };
 
 export const getWeatherForecast = async (
+  url: string,
   lat: number,
   lon: number,
-  days: number = 1,
 ): Promise<WeatherForecast> => {
-  const forecastUrl = import.meta.env.VITE_WEATHER_API_FORECAST_URL;
-  return fetch(`${forecastUrl}?q=${lat},${lon}&days=${days}`).then((res) =>
+  const forecastUrl = import.meta.env.VITE_WEATHER_API_BASE_URL;
+  return fetch(`${forecastUrl}${url}?q=${lat},${lon}&days=1`).then((res) =>
     res.json(),
   );
 };

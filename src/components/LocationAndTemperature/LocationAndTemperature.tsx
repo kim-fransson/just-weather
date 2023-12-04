@@ -1,10 +1,5 @@
 import useSWR from "swr";
-import {
-  CurrentWeather,
-  LocationData,
-  generateCacheKey,
-  getCurrentWeather,
-} from "../../api";
+import { CurrentWeather, LocationData, getCurrentWeather } from "../../api";
 import { useContext, useState } from "react";
 import { TemperaturePreferenceContext } from "../../context";
 import { useDocumentTitle, useFavicon } from "@uidotdev/usehooks";
@@ -24,8 +19,8 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   useDocumentTitle(pageTitle);
 
   const { isLoading, data: currentWeather } = useSWR(
-    generateCacheKey("CURRENT_WEATHER", location.id),
-    () => getCurrentWeather(location.lat, location.lon),
+    ["/weather/current", location.lat, location.lon],
+    ([url, lat, lon]) => getCurrentWeather(url, lat, lon),
     {
       onSuccess: (data) => {
         setFavicon(data.condition.icon);
