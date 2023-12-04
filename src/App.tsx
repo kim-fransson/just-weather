@@ -15,6 +15,7 @@ import { TemperaturePreferenceContext } from "./context/TemperaturePreferenceCon
 todo: don't include mockServiceWorker in build
 todo: timezones improvements
 todo: ref/unify useSWR calls / and error is not properly thrown
+todo: fix so that popover closes after selection
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] =
@@ -59,13 +60,15 @@ export default function App() {
           onChange={setPreferCelsius}
         />
       </header>
-      <TemperaturePreferenceContext.Provider value={preferCelsius}>
-        {currentLocation && (
-          <LocationAndTemperature location={currentLocation} />
-        )}
-        {currentLocation && <HourlyForecast location={currentLocation} />}
-        {currentLocation && <WeatherDetails location={currentLocation} />}
-      </TemperaturePreferenceContext.Provider>
+      <div className="mt-14 flex flex-col gap-6">
+        <TemperaturePreferenceContext.Provider value={preferCelsius}>
+          {currentLocation && (
+            <LocationAndTemperature location={currentLocation} />
+          )}
+          {currentLocation && <HourlyForecast location={currentLocation} />}
+          {currentLocation && <WeatherDetails location={currentLocation} />}
+        </TemperaturePreferenceContext.Provider>
+      </div>
     </main>
   );
 }

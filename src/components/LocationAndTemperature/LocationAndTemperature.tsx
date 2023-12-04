@@ -25,7 +25,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   );
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Skeleton />;
   }
 
   if (isError) {
@@ -35,7 +35,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   const { tempC, condition, tempF } = currentWeather as CurrentWeather;
 
   return (
-    <div className="inline-flex flex-col">
+    <div className="inline-flex flex-col self-start">
       <div className="flex items-center justify-between gap-4">
         <h2 className="text-gray-900/87 headline-lg">{location.name}</h2>
         <img
@@ -51,6 +51,18 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
           {preferCelsius ? `${tempC} °C` : `${tempF} °F`}
         </span>
       </div>
+    </div>
+  );
+};
+
+const Skeleton = () => {
+  return (
+    <div className="inline-flex flex-col gap-4">
+      <div className="flex items-center justify-between gap-4">
+        <div className="h-12 w-52 animate-pulse bg-gray-500" />
+        <div className="h-14 w-14 animate-pulse bg-gray-500" />
+      </div>
+      <div className="h-24 w-36 animate-pulse bg-gray-500" />
     </div>
   );
 };

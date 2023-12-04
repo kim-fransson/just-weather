@@ -46,7 +46,7 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
   );
 
   if (isLoadingForecast || isLoadingCurrentWeather) {
-    return <span>Loading...</span>;
+    return <Skeleton />;
   }
 
   const { days } = forecast as WeatherForecast;
@@ -97,6 +97,25 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
           value={`${visibilityKm} km`}
           icon={<VisibilityIcon />}
         />
+      </Grid>
+    </div>
+  );
+};
+
+const Skeleton = () => {
+  return (
+    <div className="flex flex-col gap-5 rounded-2xl bg-gray-400 p-5">
+      <div className="h-6 w-36 animate-pulse bg-gray-500" />
+      <Grid>
+        {Array.from({ length: 8 }).map(() => (
+          <div className="flex items-center justify-between rounded-2xl bg-gray-300 p-5">
+            <div className="flex flex-col gap-2">
+              <div className="h-6 w-20 animate-pulse bg-gray-500" />
+              <div className="h-10 w-24 animate-pulse bg-gray-500" />
+            </div>
+            <div className="h-7 w-7 animate-pulse bg-gray-500" />
+          </div>
+        ))}
       </Grid>
     </div>
   );

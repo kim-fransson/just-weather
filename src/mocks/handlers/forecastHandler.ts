@@ -29,6 +29,7 @@ export const forecastHandler = rest.get(
           },
         ],
       }),
+      ctx.delay(1000),
     );
   },
 );

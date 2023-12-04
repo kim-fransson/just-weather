@@ -4,7 +4,7 @@ import exampleIcon from "../../assets/weather-api/cloud_64x64.webp";
 
 export const currentWeatherHandler = rest.get(
   import.meta.env.VITE_WEATHER_API_CURRENT_WEATHER_URL,
-  (_req, res, ctx) => {
+  async (_req, res, ctx) => {
     return res(
       ctx.json({
         tempC: -3.0,
@@ -21,6 +21,7 @@ export const currentWeatherHandler = rest.get(
         uv: 1,
         visibilityKm: 10,
       }),
+      ctx.delay(1000),
     );
   },
 );

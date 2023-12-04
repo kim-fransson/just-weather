@@ -46,6 +46,7 @@ export const searchHandler = rest.get(
           id: 587701,
         },
       ]),
+      ctx.delay(1000),
     );
   },
 );
