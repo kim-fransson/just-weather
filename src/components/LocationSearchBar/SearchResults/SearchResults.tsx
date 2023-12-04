@@ -5,11 +5,12 @@ import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { LocationData } from "../../../api";
 import { joinObject } from "../../../utils";
+import { CollectionChildren } from "@react-types/shared";
 
 export interface SearchResultsProps extends AriaListBoxOptions<LocationData> {
   isLoading?: boolean;
   listBoxRef?: React.RefObject<HTMLUListElement>;
-  state?: ListState<LocationData>;
+  children?: CollectionChildren<LocationData>;
 }
 
 interface OptionProps {
@@ -19,9 +20,8 @@ interface OptionProps {
 
 export const SearchResults = (props: SearchResultsProps) => {
   const ref = useRef<HTMLUListElement>(null);
-  const { listBoxRef = ref, state, isLoading } = props;
-  let listState = useListState(props);
-  listState = state || listState;
+  const { listBoxRef = ref, isLoading } = props;
+  const listState = useListState({ ...props, selectionMode: "single" });
 
   const { listBoxProps } = useListBox(props, listState, listBoxRef);
 
@@ -65,7 +65,7 @@ const Option = ({ item, state }: OptionProps) => {
       ref={ref}
       className={twMerge(
         "cursor-pointer px-4 py-2 text-gray-900 outline-none body hover:bg-indigo-400 hover:text-white",
-        "transition-colors duration-100 ease-in-out",
+        "transition-colors duration-75 ease-in-out",
         (isFocused || isSelected) && "bg-indigo-400 text-white",
       )}
     >

@@ -2,8 +2,6 @@ import { Item } from "react-stately";
 import { RecentResult, RecentResults } from "./RecentResults";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import exampleIcon from "../../../assets/weather-api/cloud_64x64.webp";
-
 const meta: Meta<typeof RecentResults> = {
   component: RecentResults,
   args: {
@@ -26,8 +24,6 @@ export const Playground: Story = {
           lon: 24.93,
           id: 742591,
         },
-        icon: exampleIcon,
-        temp: "2°C",
       },
       {
         location: {
@@ -38,8 +34,6 @@ export const Playground: Story = {
           lon: 12.7,
           id: 2266156,
         },
-        icon: exampleIcon,
-        temp: "2°C",
       },
     ],
     selectionMode: "single",

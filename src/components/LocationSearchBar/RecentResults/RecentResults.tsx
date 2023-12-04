@@ -11,23 +11,24 @@ import { LocationData } from "../../../api";
 import { Button } from "../../Button";
 import { twMerge } from "tailwind-merge";
 import { joinObject } from "../../../utils";
+import { CollectionChildren } from "@react-types/shared";
 import TrashIcon from "../../../assets/icons/trash-icon.svg?react";
 
 export type RecentResult = {
   location: LocationData;
-  icon: string;
-  temp: string;
 };
 
 export interface RecentResultsProps extends AriaGridListOptions<RecentResult> {
   onClearAll?: () => void;
+  gridListRef?: React.RefObject<HTMLUListElement>;
+  children?: CollectionChildren<RecentResult>;
 }
 
 export const RecentResults = (props: RecentResultsProps) => {
-  const { onClearAll = () => {} } = props;
-  const state = useListState(props);
+  const state = useListState({ ...props, selectionMode: "single" });
   const ref = useRef(null);
-  const { gridProps } = useGridList(props, state, ref);
+  const { gridListRef = ref, onClearAll = () => {} } = props;
+  const { gridProps } = useGridList(props, state, gridListRef);
 
   return (
     <div className="overflow-hidden rounded-md bg-indigo-50 shadow-lg outline-none">
@@ -35,12 +36,12 @@ export const RecentResults = (props: RecentResultsProps) => {
         <h2 className="text-gray-900 headline-sm">Recent</h2>
         <Button
           onPress={onClearAll}
-          className="text-indigo-400/60 outline-none transition-all duration-200 ease-in-out hover:text-indigo-400 focus-visible:text-indigo-400"
+          className="text-indigo-400/60 outline-none transition-all duration-200 ease-in-out body-3 hover:text-indigo-400 focus-visible:text-indigo-400"
         >
           Clear all
         </Button>
       </div>
-      <ul {...gridProps} ref={ref} className="">
+      <ul {...gridProps} ref={gridListRef}>
         {[...state.collection].map((item) => (
           <ListItem key={item.key} item={item} state={state} />
         ))}
@@ -71,7 +72,7 @@ function ListItem({
       ref={ref}
       className={twMerge(
         "cursor-pointer px-4 py-2 text-gray-900 outline-none body hover:bg-indigo-400 hover:text-white",
-        "transition-colors duration-100 ease-in-out",
+        "transition-colors duration-75",
         (isFocusVisible || isSelected) && "bg-indigo-400 text-white",
       )}
     >
@@ -90,16 +91,8 @@ export const RecentResult = ({
 }: RecentResultProps) => {
   return (
     <div className="flex items-center gap-5">
-      <img
-        className="shrink-0"
-        width="20px"
-        height="20px"
-        src={recent.icon}
-        alt=""
-      />
-      <span className="body-3">{recent.temp}</span>
-      <div className="flex flex-col">
-        <span className="body-2">{recent.location.name}</span>
+      <div className="flex flex-col body-2">
+        <span>{recent.location.name}</span>
         <span className="text-xs opacity-60">
           {joinObject(recent.location, ["region", "country"])}
         </span>

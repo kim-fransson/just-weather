@@ -1,39 +1,26 @@
-import { Item } from "react-stately";
 import { Autocomplete, AutocompleteProps } from "./Autocomplete";
 import type { Meta, StoryObj } from "@storybook/react";
-import { joinObject } from "../../../utils";
 import { useState } from "react";
 import { within, userEvent } from "@storybook/testing-library";
 
 const AutocompleteWithState = (args: AutocompleteProps) => {
-  const [searchTerm, setSearchTerm] = useState(args.defaultInputValue || "");
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <Autocomplete
       {...args}
-      inputValue={searchTerm}
-      onInputChange={setSearchTerm}
-    >
-      {(item) => (
-        <Item key={item.name}>
-          {joinObject(item, ["name", "region", "country"])}
-        </Item>
-      )}
-    </Autocomplete>
+      searchQuery={searchQuery}
+      onSearchQueryChanged={setSearchQuery}
+    />
   );
 };
 
 const meta: Meta<typeof Autocomplete> = {
   component: Autocomplete,
   args: {
-    "aria-label": "Search location for weather forecast",
     placeholder: "Search for cities",
   },
-  argTypes: {
-    onSelectionChange: {
-      action: "selection changed",
-    },
-  },
+  argTypes: {},
   render: (args) => <AutocompleteWithState {...args} />,
 };
 export default meta;
@@ -42,7 +29,7 @@ type Story = StoryObj<typeof Autocomplete>;
 
 export const Playground: Story = {
   args: {
-    items: [
+    searchResults: [
       {
         country: "Finland",
         name: "Helsinki",
@@ -89,7 +76,7 @@ export const Playground: Story = {
 
 export const IsLoading: Story = {
   args: {
-    items: [],
+    searchResults: [],
     isLoading: true,
   },
   play: async ({ canvasElement }) => {
@@ -102,7 +89,7 @@ export const IsLoading: Story = {
 
 export const NoResults: Story = {
   args: {
-    items: [],
+    searchResults: [],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

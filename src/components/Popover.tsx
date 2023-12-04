@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { DismissButton, Overlay, usePopover } from "react-aria";
+import { DismissButton, FocusScope, Overlay, usePopover } from "react-aria";
 import type { AriaPopoverProps } from "react-aria";
 import type { OverlayTriggerState } from "react-stately";
 
@@ -28,8 +28,11 @@ export const Popover = (props: PopoverProps) => {
         ref={popoverRef}
         style={{ ...popoverProps.style, width: width || "auto" }}
       >
-        {children}
-        <DismissButton onDismiss={state.close} />
+        <FocusScope contain>
+          <DismissButton onDismiss={state.close} />
+          {children}
+          <DismissButton onDismiss={state.close} />
+        </FocusScope>
       </div>
     </Overlay>
   );
