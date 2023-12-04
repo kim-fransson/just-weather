@@ -7,6 +7,7 @@ import { LocationData } from "../../../api";
 import { RecentResult, RecentResults } from "../RecentResults";
 import { joinObject } from "../../../utils";
 import { mergeProps, useFocus, useKeyboard } from "react-aria";
+import { twMerge } from "tailwind-merge";
 
 export interface AutocompleteProps {
   isLoading?: boolean;
@@ -15,6 +16,7 @@ export interface AutocompleteProps {
   onSearchQueryChanged: (searchQuery: string) => void;
   onLocationSelected: (location: LocationData) => void;
   placeholder?: string;
+  className?: string;
 }
 
 export const Autocomplete = (props: AutocompleteProps) => {
@@ -38,6 +40,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
     onSearchQueryChanged,
     placeholder,
     onLocationSelected,
+    className,
   } = props;
   const { open, close, isOpen } = state;
 
@@ -88,7 +91,10 @@ export const Autocomplete = (props: AutocompleteProps) => {
   return (
     <div
       ref={measureRef}
-      className="relative w-full rounded-lg border-2 border-transparent bg-indigo-50 px-5 py-[6px] focus-within:border-indigo-400"
+      className={twMerge(
+        "relative w-full rounded-lg border-2 border-transparent bg-indigo-50 px-5 py-[6px] focus-within:border-indigo-400",
+        className,
+      )}
     >
       <input
         {...mergeProps(keyboardProps, focusProps)}

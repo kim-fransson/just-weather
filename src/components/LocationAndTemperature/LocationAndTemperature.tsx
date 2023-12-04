@@ -39,12 +39,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
     <div className="inline-flex flex-col self-start">
       <div className="flex items-center justify-between gap-4">
         <h2 className="text-gray-900/87 headline-lg">{location.name}</h2>
-        <img
-          width={64}
-          height={64}
-          src={condition.icon}
-          alt={`${condition.text} icon`}
-        />
+        <img src={condition.icon} alt={`${condition.text} icon`} />
       </div>
 
       <div className="-mt-4 flex items-center justify-between gap-4">
@@ -58,7 +53,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
 
 const Skeleton = () => {
   return (
-    <div className="inline-flex flex-col gap-4">
+    <div className="inline-flex flex-col gap-4 self-start">
       <div className="flex items-center justify-between gap-4">
         <div className="h-12 w-52 animate-pulse bg-gray-500" />
         <div className="h-14 w-14 animate-pulse bg-gray-500" />

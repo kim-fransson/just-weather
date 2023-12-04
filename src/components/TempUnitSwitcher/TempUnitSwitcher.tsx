@@ -8,7 +8,9 @@ import {
 import { useToggleState } from "react-stately";
 import { twMerge } from "tailwind-merge";
 
-export interface TempUnitSwitcherProps extends AriaSwitchProps {}
+export interface TempUnitSwitcherProps extends AriaSwitchProps {
+  className?: string;
+}
 
 export const TempUnitSwitcher = (props: TempUnitSwitcherProps) => {
   const state = useToggleState(props);
@@ -21,6 +23,7 @@ export const TempUnitSwitcher = (props: TempUnitSwitcherProps) => {
       className={twMerge(
         "relative block h-8 w-16 shrink-0 cursor-pointer rounded-[60px] border border-transparent bg-indigo-50",
         isFocusVisible && " border-indigo-400",
+        props.className,
       )}
     >
       <VisuallyHidden>

@@ -5,10 +5,12 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 export interface LocationSearchBarProps {
   onLocationSelected: (location: LocationData) => void;
+  className?: string;
 }
 
 export const LocationSearchBar = ({
   onLocationSelected,
+  className,
 }: LocationSearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -34,6 +36,7 @@ export const LocationSearchBar = ({
       aria-label="Search location for weather forecast"
       placeholder="Search for cities"
       onLocationSelected={onLocationSelected}
+      className={className}
     />
   );
 };

@@ -14,10 +14,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PageError } from "./components/PageError";
 
 /*
-todo: timezones improvements
 todo: fix so that popover closes after selection
-todo: check responsiveness
-todo: only one env variable?
 todo: rate limit on AWS
 */
 export default function App() {
@@ -53,14 +50,18 @@ export default function App() {
   }, [geoLocationState, currentLocation, trigger]);
 
   return (
-    <main className="mx-auto flex min-h-screen flex-col gap-14 bg-gray-100 px-10 pb-12 pt-8 lg:px-60">
-      <header className="flex items-center gap-10">
-        <Logo className="shrink-0" />
-        <LocationSearchBar onLocationSelected={setCurrentLocation} />
+    <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-14 px-10 pb-12 pt-8">
+      <header className="grid grid-cols-[1fr_min-content] items-center gap-4 sm:flex sm:gap-10">
+        <Logo className="shrink-0 justify-self-end" />
+        <LocationSearchBar
+          onLocationSelected={setCurrentLocation}
+          className="col-span-2"
+        />
         <TempUnitSwitcher
           aria-label="switch unit between fahrenheit and celsius"
           isSelected={preferCelsius}
           onChange={setPreferCelsius}
+          className="col-start-2 row-start-1 justify-self-end"
         />
       </header>
 
