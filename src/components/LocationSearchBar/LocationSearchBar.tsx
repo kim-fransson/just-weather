@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { LocationData, searchByQuery } from "../../api";
-import { Autocomplete } from "../Autocomplete";
+import { Autocomplete } from "./Autocomplete";
 import { useDebounce } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import { Item } from "react-stately";

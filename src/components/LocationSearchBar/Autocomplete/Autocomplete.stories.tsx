@@ -1,7 +1,7 @@
 import { Item } from "react-stately";
 import { Autocomplete, AutocompleteProps } from "./Autocomplete";
 import type { Meta, StoryObj } from "@storybook/react";
-import { joinObject } from "../../utils";
+import { joinObject } from "../../../utils";
 import { useState } from "react";
 import { within, userEvent } from "@storybook/testing-library";
 

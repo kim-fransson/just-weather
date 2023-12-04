@@ -1,18 +1,18 @@
 import { Item } from "react-stately";
-import { LocationData } from "../../api";
-import { ListBox } from "./ListBox";
+import { LocationData } from "../../../api";
+import { SearchResults } from "./SearchResults";
 import type { Meta, StoryObj } from "@storybook/react";
-import { joinObject } from "../../utils";
+import { joinObject } from "../../../utils";
 
-const meta: Meta<typeof ListBox> = {
-  component: ListBox,
+const meta: Meta<typeof SearchResults> = {
+  component: SearchResults,
   args: {
-    "aria-label": "listbox story",
+    "aria-label": "search results",
   },
 };
 export default meta;
 
-type Story = StoryObj<typeof ListBox<LocationData>>;
+type Story = StoryObj<typeof SearchResults>;
 
 export const Playground: Story = {
   args: {
@@ -61,13 +61,13 @@ export const Playground: Story = {
     selectionMode: "single",
   },
   render: (args) => (
-    <ListBox {...args}>
+    <SearchResults {...args}>
       {(item: LocationData) => (
         <Item key={item.name}>
           {joinObject(item, ["name", "region", "country"])}
         </Item>
       )}
-    </ListBox>
+    </SearchResults>
   ),
 };
 
@@ -77,8 +77,28 @@ export const IsLoading: Story = {
     isLoading: true,
   },
   render: (args) => (
-    <ListBox {...args}>
-      {(item: LocationData) => <Item key={item.name}>{joinObject(item)}</Item>}
-    </ListBox>
+    <SearchResults {...args}>
+      {(item: LocationData) => (
+        <Item key={item.name}>
+          {joinObject(item, ["name", "region", "country"])}
+        </Item>
+      )}
+    </SearchResults>
+  ),
+};
+
+export const IsEmpty: Story = {
+  args: {
+    items: [],
+    isLoading: false,
+  },
+  render: (args) => (
+    <SearchResults {...args}>
+      {(item: LocationData) => (
+        <Item key={item.name}>
+          {joinObject(item, ["name", "region", "country"])}
+        </Item>
+      )}
+    </SearchResults>
   ),
 };

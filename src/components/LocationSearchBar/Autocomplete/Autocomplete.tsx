@@ -1,8 +1,8 @@
 import { AriaComboBoxProps, useComboBox, useFilter } from "react-aria";
 import { useComboBoxState } from "react-stately";
 import { useRef } from "react";
-import { Popover } from "../Popover";
-import { ListBox } from "../ListBox/ListBox";
+import { Popover } from "../../Popover";
+import { SearchResults } from "../SearchResults/SearchResults";
 import { useMeasure } from "@uidotdev/usehooks";
 
 export interface AutocompleteProps<T extends object>
@@ -64,7 +64,7 @@ export const Autocomplete = <T extends object>(props: AutocompleteProps<T>) => {
               No results found
             </p>
           ) : (
-            <ListBox
+            <SearchResults
               {...listBoxProps}
               listBoxRef={listBoxRef}
               state={state}

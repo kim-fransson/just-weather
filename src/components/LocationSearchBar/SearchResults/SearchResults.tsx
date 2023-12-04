@@ -1,21 +1,23 @@
 import type { AriaListBoxOptions } from "react-aria";
-import { ListState, Node, useListState } from "react-stately";
+import { Item, ListState, Node, useListState } from "react-stately";
 import { mergeProps, useListBox, useOption } from "react-aria";
 import { useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import { LocationData } from "../../../api";
+import { joinObject } from "../../../utils";
 
-export interface ListBoxProps<T> extends AriaListBoxOptions<T> {
+export interface SearchResultsProps extends AriaListBoxOptions<LocationData> {
   isLoading?: boolean;
   listBoxRef?: React.RefObject<HTMLUListElement>;
-  state?: ListState<T>;
+  state?: ListState<LocationData>;
 }
 
-interface OptionProps<T> {
-  item: Node<T>;
-  state: ListState<T>;
+interface OptionProps {
+  item: Node<LocationData>;
+  state: ListState<LocationData>;
 }
 
-export const ListBox = <T extends object>(props: ListBoxProps<T>) => {
+export const SearchResults = (props: SearchResultsProps) => {
   const ref = useRef<HTMLUListElement>(null);
   const { listBoxRef = ref, state, isLoading } = props;
   let listState = useListState(props);
@@ -32,13 +34,15 @@ export const ListBox = <T extends object>(props: ListBoxProps<T>) => {
         isLoading && "bg-gray-400",
       )}
     >
-      {isLoading
-        ? Array.from({ length: 5 }, (_, index) => (
-            <SkeletonOption key={index} />
-          ))
-        : [...listState.collection].map((item) => (
-            <Option<T> key={item.key} item={item} state={listState} />
-          ))}
+      {isLoading ? (
+        Array.from({ length: 5 }, (_, index) => <SkeletonOption key={index} />)
+      ) : !listState.collection.size ? (
+        <p className="px-4 py-2 text-gray-900 body">No results found</p>
+      ) : (
+        [...listState.collection].map((item) => (
+          <Option key={item.key} item={item} state={listState} />
+        ))
+      )}
     </ul>
   );
 };
@@ -47,7 +51,7 @@ const SkeletonOption = () => {
   return <li className="mx-4 my-2 h-8 animate-pulse rounded-sm bg-gray-500" />;
 };
 
-const Option = <T,>({ item, state }: OptionProps<T>) => {
+const Option = ({ item, state }: OptionProps) => {
   const ref = useRef(null);
   const { optionProps, isSelected, isFocused } = useOption(
     { key: item.key },
@@ -67,5 +71,13 @@ const Option = <T,>({ item, state }: OptionProps<T>) => {
     >
       {item.rendered}
     </li>
+  );
+};
+
+export const SearchResult = ({ location }: { location: LocationData }) => {
+  return (
+    <Item<LocationData> key={location.id}>
+      {joinObject(location, ["name", "region", "country"])}
+    </Item>
   );
 };
