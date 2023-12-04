@@ -5,8 +5,9 @@ import {
   generateCacheKey,
   getCurrentWeather,
 } from "../../api";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TemperaturePreferenceContext } from "../../context";
+import { useDocumentTitle, useFavicon } from "@uidotdev/usehooks";
 
 export interface LocationAndTemperatureProps {
   location: LocationData;
@@ -16,9 +17,21 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   const { location } = props;
   const preferCelsius = useContext(TemperaturePreferenceContext);
 
+  const [favicon, setFavicon] = useState("");
+  const [pageTitle, setPageTitle] = useState("Just Weather");
+
+  useFavicon(favicon);
+  useDocumentTitle(pageTitle);
+
   const { isLoading, data: currentWeather } = useSWR(
     generateCacheKey("CURRENT_WEATHER", location.id),
     () => getCurrentWeather(location.lat, location.lon),
+    {
+      onSuccess: (data) => {
+        setFavicon(data.condition.icon);
+        setPageTitle(data.condition.text);
+      },
+    },
   );
 
   if (isLoading) {
