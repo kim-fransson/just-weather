@@ -10,12 +10,15 @@ import { LocationSearchBar } from "./components/LocationSearchBar";
 import useSWRMutation from "swr/mutation";
 import { TempUnitSwitcher } from "./components/TempUnitSwitcher/TempUnitSwitcher";
 import { TemperaturePreferenceContext } from "./context/TemperaturePreferenceContext";
+import { ErrorBoundary } from "react-error-boundary";
+import { PageError } from "./components/PageError";
 
 /*
 todo: don't include mockServiceWorker in build
 todo: timezones improvements
-todo: ref/unify useSWR calls / and error is not properly thrown
 todo: fix so that popover closes after selection
+todo: icon title
+todo: check responsiveness
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] =
@@ -50,7 +53,7 @@ export default function App() {
   }, [geoLocationState, currentLocation, trigger]);
 
   return (
-    <main className="mx-auto h-screen border px-10 pb-12 pt-8 lg:px-60">
+    <main className="mx-auto flex min-h-screen flex-col gap-14 bg-gray-100 px-10 pb-12 pt-8 lg:px-60">
       <header className="flex items-center gap-10">
         <Logo className="shrink-0" />
         <LocationSearchBar onLocationSelected={setCurrentLocation} />
@@ -60,15 +63,18 @@ export default function App() {
           onChange={setPreferCelsius}
         />
       </header>
-      <div className="mt-14 flex flex-col gap-6">
-        <TemperaturePreferenceContext.Provider value={preferCelsius}>
-          {currentLocation && (
-            <LocationAndTemperature location={currentLocation} />
-          )}
-          {currentLocation && <HourlyForecast location={currentLocation} />}
-          {currentLocation && <WeatherDetails location={currentLocation} />}
-        </TemperaturePreferenceContext.Provider>
-      </div>
+
+      <ErrorBoundary fallback={<PageError />}>
+        {currentLocation && (
+          <div className="flex flex-col gap-6">
+            <TemperaturePreferenceContext.Provider value={preferCelsius}>
+              <LocationAndTemperature location={currentLocation} />
+              <HourlyForecast location={currentLocation} />
+              <WeatherDetails location={currentLocation} />
+            </TemperaturePreferenceContext.Provider>
+          </div>
+        )}
+      </ErrorBoundary>
     </main>
   );
 }

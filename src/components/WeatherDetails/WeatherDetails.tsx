@@ -29,20 +29,14 @@ export interface WeatherDetailsProps {
 export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
   const preferCelsius = useContext(TemperaturePreferenceContext);
 
-  const {
-    isLoading: isLoadingForecast,
-    data: forecast,
-    error: isForecastError,
-  } = useSWR(generateCacheKey("FORECAST", location.id), () =>
-    getWeatherForecast(location.lat, location.lon, 1),
+  const { isLoading: isLoadingForecast, data: forecast } = useSWR(
+    generateCacheKey("FORECAST", location.id),
+    () => getWeatherForecast(location.lat, location.lon, 1),
   );
 
-  const {
-    isLoading: isLoadingCurrentWeather,
-    data: currentWeather,
-    error: isCurrentWeatherError,
-  } = useSWR(generateCacheKey("CURRENT_WEATHER", location.id), () =>
-    getCurrentWeather(location.lat, location.lon),
+  const { isLoading: isLoadingCurrentWeather, data: currentWeather } = useSWR(
+    generateCacheKey("CURRENT_WEATHER", location.id),
+    () => getCurrentWeather(location.lat, location.lon),
   );
 
   if (isLoadingForecast || isLoadingCurrentWeather) {
@@ -50,10 +44,6 @@ export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
   }
 
   const { days } = forecast as WeatherForecast;
-
-  if (isForecastError || isCurrentWeatherError || !days) {
-    return <span>Error :/</span>;
-  }
 
   const { astro, chanceOfRain } = days[0];
   const { pressureMb, windKph, uv, feelslikeC, visibilityKm, feelslikeF } =
@@ -107,8 +97,11 @@ const Skeleton = () => {
     <div className="flex flex-col gap-5 rounded-2xl bg-gray-400 p-5">
       <div className="h-6 w-36 animate-pulse bg-gray-500" />
       <Grid>
-        {Array.from({ length: 8 }).map(() => (
-          <div className="flex items-center justify-between rounded-2xl bg-gray-300 p-5">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between rounded-2xl bg-gray-300 p-5"
+          >
             <div className="flex flex-col gap-2">
               <div className="h-6 w-20 animate-pulse bg-gray-500" />
               <div className="h-10 w-24 animate-pulse bg-gray-500" />

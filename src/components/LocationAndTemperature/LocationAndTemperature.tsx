@@ -16,20 +16,13 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   const { location } = props;
   const preferCelsius = useContext(TemperaturePreferenceContext);
 
-  const {
-    isLoading,
-    data: currentWeather,
-    error: isError,
-  } = useSWR(generateCacheKey("CURRENT_WEATHER", location.id), () =>
-    getCurrentWeather(location.lat, location.lon),
+  const { isLoading, data: currentWeather } = useSWR(
+    generateCacheKey("CURRENT_WEATHER", location.id),
+    () => getCurrentWeather(location.lat, location.lon),
   );
 
   if (isLoading) {
     return <Skeleton />;
-  }
-
-  if (isError) {
-    return <span>Error :/</span>;
   }
 
   const { tempC, condition, tempF } = currentWeather as CurrentWeather;

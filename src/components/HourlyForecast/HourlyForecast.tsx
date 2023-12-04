@@ -12,12 +12,9 @@ export interface HourlyForecastProps {
 }
 
 export const HourlyForecast = ({ location }: HourlyForecastProps) => {
-  const {
-    isLoading,
-    data: forecast,
-    error: isError,
-  } = useSWR(generateCacheKey("FORECAST", location.id), () =>
-    getWeatherForecast(location.lat, location.lon, 1),
+  const { isLoading, data: forecast } = useSWR(
+    generateCacheKey("FORECAST", location.id),
+    () => getWeatherForecast(location.lat, location.lon, 1),
   );
 
   if (isLoading) {
@@ -25,10 +22,6 @@ export const HourlyForecast = ({ location }: HourlyForecastProps) => {
   }
 
   const { days } = forecast as WeatherForecast;
-
-  if (isError || !days) {
-    return <span>Error :/</span>;
-  }
 
   return (
     <div className="flex flex-col gap-5 overflow-hidden rounded-2xl bg-indigo-50 p-5 hover:overflow-x-auto">
@@ -43,8 +36,11 @@ const Skeleton = () => {
     <div className="flex flex-col gap-5 overflow-hidden rounded-2xl bg-gray-400 p-5">
       <div className="h-6 w-40 animate-pulse bg-gray-500"></div>
       <div className="flex gap-3">
-        {Array.from({ length: 24 }).map(() => (
-          <div className="flex h-24 w-20 flex-col items-center gap-2 bg-gray-300 px-4 py-2">
+        {Array.from({ length: 24 }).map((_, index) => (
+          <div
+            key={index}
+            className="flex h-24 w-20 flex-col items-center gap-2 bg-gray-300 px-4 py-2"
+          >
             <div className="h-6 w-11 animate-pulse bg-gray-500" />
             <div className="h-8 w-8 animate-pulse bg-gray-500" />
             <div className="h-6 w-12 animate-pulse bg-gray-500" />
