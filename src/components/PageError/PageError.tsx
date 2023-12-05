@@ -12,7 +12,7 @@ export const PageError = () => {
       </p>
       <Button
         onPress={() => window.location.reload()}
-        className="rounded-full bg-indigo-300 px-3 py-1 text-gray-100 outline-none transition-colors duration-150 ease-in-out body-2 hover:bg-indigo-500 focus-visible:bg-indigo-500"
+        className="select-none rounded-full bg-indigo-300 px-3 py-1 text-gray-100 outline-none transition-colors duration-150 ease-in-out body-2 hover:bg-indigo-500 focus-visible:bg-indigo-500"
       >
         Refresh page
       </Button>

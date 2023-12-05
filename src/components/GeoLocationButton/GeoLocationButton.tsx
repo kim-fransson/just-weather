@@ -49,7 +49,7 @@ export const GeoLocationButton = (props: GeoLocationButtonProps) => {
         {...triggerProps}
         onPress={onPress}
         className={twMerge(
-          "text-gray-900/60 outline-none transition-colors duration-200 ease-in-out hover:text-gray-900 focus-visible:text-gray-900",
+          "select-none text-gray-900/60 outline-none transition-colors duration-200 ease-in-out hover:text-gray-900 focus-visible:text-gray-900",
           className,
         )}
       >

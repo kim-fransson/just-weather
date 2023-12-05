@@ -36,7 +36,7 @@ export const RecentResults = (props: RecentResultsProps) => {
         <h2 className="text-gray-900 headline-sm">Recent</h2>
         <Button
           onPress={onClearAll}
-          className="text-indigo-400/60 outline-none transition-all duration-200 ease-in-out body-3 hover:text-indigo-400 focus-visible:text-indigo-400"
+          className="select-none text-indigo-400/60 outline-none transition-all duration-200 ease-in-out body-3 hover:text-indigo-400 focus-visible:text-indigo-400"
         >
           Clear all
         </Button>
@@ -98,7 +98,7 @@ export const RecentResult = ({
         </span>
       </div>
       <Button onPress={onDelete} className="group ml-auto outline-none">
-        <TrashIcon className="opacity-60 transition-all duration-100 group-hover:opacity-100  group-focus-visible:opacity-100" />
+        <TrashIcon className="select-none opacity-60 transition-all duration-100 group-hover:opacity-100  group-focus-visible:opacity-100" />
       </Button>
     </div>
   );

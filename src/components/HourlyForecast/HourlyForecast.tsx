@@ -21,8 +21,8 @@ export const HourlyForecast = ({ location }: HourlyForecastProps) => {
   return (
     <div
       tabIndex={0}
-      className="flex flex-col gap-5 overflow-hidden rounded-2xl border-2 border-transparent 
-      bg-indigo-50 p-5 outline-none hover:overflow-x-auto focus-visible:overflow-x-auto focus-visible:border-indigo-400"
+      className="flex touch-pan-x flex-col gap-5 overflow-hidden rounded-2xl border-2 
+      border-transparent bg-indigo-50 p-5 outline-none hover:overflow-x-auto focus-visible:overflow-x-auto focus-visible:border-indigo-400"
     >
       <h2 className="uppercase text-gray-900/60 body-2">today's forecast</h2>
       <List forecast={days[0].hours} />
