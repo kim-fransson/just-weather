@@ -16,7 +16,6 @@ import { PageError } from "./components/PageError";
 /*
 todo: rate limit on AWS
 todo: credit to weather app
-todo: scroll broken for mobile
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] = useSessionStorage<
