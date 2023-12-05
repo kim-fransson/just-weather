@@ -2,7 +2,7 @@ import { Item, useOverlayTriggerState } from "react-stately";
 import { useRef, useState } from "react";
 import { Popover } from "../../Popover";
 import { SearchResults } from "../SearchResults/SearchResults";
-import { useMeasure, useSessionStorage } from "@uidotdev/usehooks";
+import { useLocalStorage, useMeasure } from "@uidotdev/usehooks";
 import { LocationData } from "../../../api";
 import { RecentResult, RecentResults } from "../RecentResults";
 import { joinObject } from "../../../utils";
@@ -23,7 +23,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
   const [measureRef, { width }] = useMeasure();
   const [focusFromList, setFocusFromList] = useState(false);
   const state = useOverlayTriggerState({});
-  const [recentResults, setRecentResults] = useSessionStorage<RecentResult[]>(
+  const [recentResults, setRecentResults] = useLocalStorage<RecentResult[]>(
     "recentResults",
     [],
   );

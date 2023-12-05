@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Logo from "./assets/icons/logo.svg?react";
 import { randomCapital } from "./utils";
-import { useSessionStorage } from "@uidotdev/usehooks";
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { LocationAndTemperature } from "./components/LocationAndTemperature/LocationAndTemperature";
 import { LocationData, search } from "./api";
 import { HourlyForecast } from "./components/HourlyForecast/HourlyForecast";
@@ -14,11 +14,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PageError } from "./components/PageError";
 
 export default function App() {
-  const [currentLocation, setCurrentLocation] = useSessionStorage<
+  const [currentLocation, setCurrentLocation] = useLocalStorage<
     LocationData | undefined
   >("currentLocation", undefined);
 
-  const [preferCelsius, setPreferCelsius] = useSessionStorage(
+  const [preferCelsius, setPreferCelsius] = useLocalStorage(
     "preferCelsius",
     true,
   );
