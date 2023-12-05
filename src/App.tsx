@@ -16,6 +16,7 @@ import { PageError } from "./components/PageError";
 /*
 todo: rate limit on AWS
 todo: credit to weather app
+todo: credit bigdevsoon
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] = useSessionStorage<
