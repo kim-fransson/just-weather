@@ -16,6 +16,7 @@ import { PageError } from "./components/PageError";
 /*
 todo: fix so that popover closes after selection
 todo: rate limit on AWS
+todo: fix loading animation when fetching location
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] =
