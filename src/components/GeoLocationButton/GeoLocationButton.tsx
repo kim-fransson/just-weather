@@ -44,6 +44,7 @@ export const GeoLocationButton = (props: GeoLocationButtonProps) => {
   return (
     <>
       <Button
+        aria-label="ask for user location"
         buttonRef={triggerRef}
         {...triggerProps}
         onPress={onPress}
