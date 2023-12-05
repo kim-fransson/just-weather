@@ -21,7 +21,7 @@ export const TempUnitSwitcher = (props: TempUnitSwitcherProps) => {
   return (
     <label
       className={twMerge(
-        "relative block h-8 w-16 shrink-0 cursor-pointer rounded-[60px] border border-transparent bg-indigo-50",
+        "relative block h-8 w-16 shrink-0 cursor-pointer rounded-[60px] border-2 border-transparent bg-indigo-50",
         isFocusVisible && " border-indigo-400",
         props.className,
       )}
@@ -31,8 +31,8 @@ export const TempUnitSwitcher = (props: TempUnitSwitcherProps) => {
       </VisuallyHidden>
       <div
         className={twMerge(
-          "absolute left-[2px] top-1/2 h-7 w-7 -translate-y-1/2 rounded-full bg-indigo-400 shadow-md transition-transform duration-200 ease-in-out",
-          state.isSelected && "translate-x-[30px]",
+          "absolute left-[1px] top-1/2 h-7 w-7 -translate-y-1/2 rounded-full bg-indigo-400 shadow-md transition-transform duration-200 ease-in-out",
+          state.isSelected && "translate-x-[31px]",
         )}
       />
       <span
