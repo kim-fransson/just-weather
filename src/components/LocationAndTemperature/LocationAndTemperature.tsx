@@ -5,7 +5,7 @@ import { TemperaturePreferenceContext } from "../../context";
 import { useDocumentTitle, useFavicon } from "@uidotdev/usehooks";
 
 export interface LocationAndTemperatureProps {
-  location: LocationData;
+  location?: LocationData;
 }
 
 export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
@@ -19,7 +19,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
   useDocumentTitle(pageTitle);
 
   const { isLoading, data: currentWeather } = useSWR(
-    ["/weather/current", location.lat, location.lon],
+    location ? ["/weather/current", location.lat, location.lon] : null,
     ([url, lat, lon]) => getCurrentWeather(url, lat, lon),
     {
       onSuccess: (data) => {
@@ -29,7 +29,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
     },
   );
 
-  if (isLoading) {
+  if (isLoading || !location) {
     return <Skeleton />;
   }
 

@@ -22,23 +22,23 @@ import { useContext } from "react";
 import { TemperaturePreferenceContext } from "../../context";
 
 export interface WeatherDetailsProps {
-  location: LocationData;
+  location?: LocationData;
 }
 
 export const WeatherDetails = ({ location }: WeatherDetailsProps) => {
   const preferCelsius = useContext(TemperaturePreferenceContext);
 
   const { isLoading: isLoadingForecast, data: forecast } = useSWR(
-    ["/weather/forecast", location.lat, location.lon],
+    location ? ["/weather/forecast", location.lat, location.lon] : null,
     ([url, lat, lon]) => getWeatherForecast(url, lat, lon),
   );
 
   const { isLoading: isLoadingCurrentWeather, data: currentWeather } = useSWR(
-    ["/weather/current", location.lat, location.lon],
+    location ? ["/weather/current", location.lat, location.lon] : null,
     ([url, lat, lon]) => getCurrentWeather(url, lat, lon),
   );
 
-  if (isLoadingForecast || isLoadingCurrentWeather) {
+  if (isLoadingForecast || isLoadingCurrentWeather || !location) {
     return <Skeleton />;
   }
 

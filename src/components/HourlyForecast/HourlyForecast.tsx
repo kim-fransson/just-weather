@@ -3,16 +3,16 @@ import { LocationData, WeatherForecast, getWeatherForecast } from "../../api";
 import { List } from "./List";
 
 export interface HourlyForecastProps {
-  location: LocationData;
+  location?: LocationData;
 }
 
 export const HourlyForecast = ({ location }: HourlyForecastProps) => {
   const { isLoading, data: forecast } = useSWR(
-    ["/weather/forecast", location.lat, location.lon],
+    location ? ["/weather/forecast", location.lat, location.lon] : null,
     ([url, lat, lon]) => getWeatherForecast(url, lat, lon),
   );
 
-  if (isLoading) {
+  if (isLoading || !location) {
     return <Skeleton />;
   }
 

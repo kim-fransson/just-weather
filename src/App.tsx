@@ -16,11 +16,11 @@ import { PageError } from "./components/PageError";
 /*
 todo: fix so that popover closes after selection
 todo: rate limit on AWS
-todo: fix loading animation when fetching location
 */
 export default function App() {
-  const [currentLocation, setCurrentLocation] =
-    useSessionStorage<LocationData | null>("currentLocation", null);
+  const [currentLocation, setCurrentLocation] = useSessionStorage<
+    LocationData | undefined
+  >("currentLocation", undefined);
 
   const geoLocationState = useGeolocation();
   const [preferCelsius, setPreferCelsius] = useSessionStorage(
@@ -67,15 +67,13 @@ export default function App() {
       </header>
 
       <ErrorBoundary fallback={<PageError />}>
-        {currentLocation && (
-          <div className="flex flex-col gap-6">
-            <TemperaturePreferenceContext.Provider value={preferCelsius}>
-              <LocationAndTemperature location={currentLocation} />
-              <HourlyForecast location={currentLocation} />
-              <WeatherDetails location={currentLocation} />
-            </TemperaturePreferenceContext.Provider>
-          </div>
-        )}
+        <div className="flex flex-col gap-6">
+          <TemperaturePreferenceContext.Provider value={preferCelsius}>
+            <LocationAndTemperature location={currentLocation} />
+            <HourlyForecast location={currentLocation} />
+            <WeatherDetails location={currentLocation} />
+          </TemperaturePreferenceContext.Provider>
+        </div>
       </ErrorBoundary>
     </main>
   );
