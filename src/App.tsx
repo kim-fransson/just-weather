@@ -68,6 +68,36 @@ export default function App() {
           </TemperaturePreferenceContext.Provider>
         </div>
       </ErrorBoundary>
+
+      <footer className="mt-auto flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="flex items-center gap-2">
+          <span className="select-none rounded-lg bg-indigo-400 px-2 py-1 text-gray-100 body-2">
+            Powered by
+          </span>
+          <a
+            className="body-2 hover:text-indigo-400"
+            href="https://www.weatherapi.com/"
+            target="_blank"
+            title="Weather API"
+          >
+            WeatherAPI.com
+          </a>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="select-none rounded-lg bg-[#672871] px-2 py-1 text-gray-100 body-2">
+            Designs from
+          </span>
+          <a
+            className="body-2 hover:text-[#672871]"
+            href="https://bigdevsoon.me/"
+            target="_blank"
+            title="BigDevSoon"
+          >
+            BigDevSoon.me
+          </a>
+        </div>
+      </footer>
     </main>
   );
 }
