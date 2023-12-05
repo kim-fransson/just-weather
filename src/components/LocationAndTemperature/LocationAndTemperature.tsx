@@ -24,7 +24,7 @@ export const LocationAndTemperature = (props: LocationAndTemperatureProps) => {
     {
       onSuccess: (data) => {
         setFavicon(data.condition.icon);
-        setPageTitle(data.condition.text);
+        setPageTitle(data.condition.text + " | " + location!.name);
       },
     },
   );

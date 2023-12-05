@@ -21,7 +21,7 @@ export interface AutocompleteProps {
 
 export const Autocomplete = (props: AutocompleteProps) => {
   const [measureRef, { width }] = useMeasure();
-  const [listHasFocus, setListHasFocus] = useState(false);
+  const [focusFromList, setFocusFromList] = useState(false);
   const state = useOverlayTriggerState({});
   const [recentResults, setRecentResults] = useSessionStorage<RecentResult[]>(
     "recentResults",
@@ -49,20 +49,24 @@ export const Autocomplete = (props: AutocompleteProps) => {
 
   const openPopover = () => {
     open();
-    setListHasFocus(true);
   };
 
   const closePopover = () => {
+    setFocusFromList(true);
     close();
-    setListHasFocus(false);
   };
 
   const { focusProps } = useFocus({
     onFocusChange: (isFocus) => {
-      if (isFocus) {
+      console.log("focus changed");
+      console.log({
+        isFocus,
+        focusFromList,
+      });
+      if (isFocus && !focusFromList) {
         openPopover();
-      } else if (!listHasFocus) {
-        closePopover();
+      } else {
+        setFocusFromList(false);
       }
     },
   });
@@ -101,6 +105,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
         ref={inputRef}
         placeholder={placeholder}
         value={searchQuery}
+        onClick={() => !isOpen && openPopover()}
         onChange={(e) => {
           if (e.target.value !== "") {
             openPopover();
@@ -161,9 +166,6 @@ export const Autocomplete = (props: AutocompleteProps) => {
                     <RecentResult
                       recent={item}
                       onDelete={() => {
-                        if (recentResults.length === 1) {
-                          closePopover();
-                        }
                         setRecentResults((current) =>
                           current.filter(
                             (recent) => recent.location.id !== item.location.id,
