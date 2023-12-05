@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Logo from "./assets/icons/logo.svg?react";
 import { randomCapital } from "./utils";
-import { useGeolocation, useSessionStorage } from "@uidotdev/usehooks";
+import { useSessionStorage } from "@uidotdev/usehooks";
 import { LocationAndTemperature } from "./components/LocationAndTemperature/LocationAndTemperature";
 import { LocationData, search } from "./api";
 import { HourlyForecast } from "./components/HourlyForecast/HourlyForecast";
@@ -14,15 +14,14 @@ import { ErrorBoundary } from "react-error-boundary";
 import { PageError } from "./components/PageError";
 
 /*
-todo: fix so that popover closes after selection
 todo: rate limit on AWS
+todo: credit to weather app
 */
 export default function App() {
   const [currentLocation, setCurrentLocation] = useSessionStorage<
     LocationData | undefined
   >("currentLocation", undefined);
 
-  const geoLocationState = useGeolocation();
   const [preferCelsius, setPreferCelsius] = useSessionStorage(
     "preferCelsius",
     true,
@@ -34,21 +33,14 @@ export default function App() {
 
   useEffect(() => {
     const fetchLocation = async () => {
-      if (!geoLocationState.loading) {
-        if (!geoLocationState.error) {
-          const query = `${geoLocationState.latitude},${geoLocationState.longitude}`;
-          trigger(query);
-        } else {
-          const capital = randomCapital();
-          const query = `${capital.lat},${capital.lon}`;
-          trigger(query);
-        }
-      }
+      const capital = randomCapital();
+      const query = `${capital.lat},${capital.lon}`;
+      trigger(query);
     };
     if (!currentLocation) {
       fetchLocation();
     }
-  }, [geoLocationState, currentLocation, trigger]);
+  }, [currentLocation, trigger]);
 
   return (
     <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-14 px-10 pb-12 pt-8">
@@ -56,7 +48,7 @@ export default function App() {
         <Logo className="shrink-0 justify-self-end" />
         <LocationSearchBar
           onLocationSelected={setCurrentLocation}
-          className="col-span-2"
+          className="col-span-2 flex-1"
         />
         <TempUnitSwitcher
           aria-label="switch unit between fahrenheit and celsius"

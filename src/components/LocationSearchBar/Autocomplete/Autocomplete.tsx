@@ -58,11 +58,6 @@ export const Autocomplete = (props: AutocompleteProps) => {
 
   const { focusProps } = useFocus({
     onFocusChange: (isFocus) => {
-      console.log("focus changed");
-      console.log({
-        isFocus,
-        focusFromList,
-      });
       if (isFocus && !focusFromList) {
         openPopover();
       } else {
@@ -96,7 +91,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
     <div
       ref={measureRef}
       className={twMerge(
-        "relative w-full rounded-lg border-2 border-transparent bg-indigo-50 px-5 py-[6px] focus-within:border-indigo-400",
+        "relative w-full rounded-lg border-2 border-transparent bg-indigo-50 py-[6px] pl-5 pr-14 focus-within:border-indigo-400",
         className,
       )}
     >
