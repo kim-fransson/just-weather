@@ -1,14 +1,19 @@
 import { DateTime } from "luxon";
 import { HourlyForecast } from "../../../api";
 import { Card } from "../Card";
+import { CSSProperties } from "react";
 
 export interface ListProps {
   forecast: HourlyForecast[];
+  style?: CSSProperties;
 }
 
-export const List = ({ forecast }: ListProps) => {
+export const List = ({ forecast, style }: ListProps) => {
   return (
-    <div className="flex gap-3">
+    <div
+      style={style}
+      className="flex w-[max-content] gap-3 transition-transform duration-300 ease-in-out"
+    >
       {forecast
         .map((hour) => {
           const dateTime = DateTime.fromSeconds(hour.timeEpoch);
